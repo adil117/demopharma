@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Http\Controllers\Api\V1;
+
+use App\TaskTag;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\StoreTaskTagsRequest;
+use App\Http\Requests\Admin\UpdateTaskTagsRequest;
+use Yajra\DataTables\DataTables;
+
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+class TaskTagsController extends Controller
+{
+    public function index()
+    {
+        return TaskTag::all();
+    }
+
+    public function show($id)
+    {
+        return TaskTag::findOrFail($id);
+    }
+
+    public function update(UpdateTaskTagsRequest $request, $id)
+    {
+        $task_tag = TaskTag::findOrFail($id);
+        $task_tag->update($request->all());
+        
+
+        return $task_tag;
+    }
+
+    public function store(StoreTaskTagsRequest $request)
+    {
+        $task_tag = TaskTag::create($request->all());
+        
+
+        return $task_tag;
+    }
+
+    public function destroy($id)
+    {
+        $task_tag = TaskTag::findOrFail($id);
+        $task_tag->delete();
+        return '';
+    }
+}
